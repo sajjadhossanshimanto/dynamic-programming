@@ -15,6 +15,7 @@ forming a decition tree
  - try to form the question as different state in other word index
  - do all the stuff we are allowesd by the question/ 
  - in other word. conststract lead by taking decitions
+ - if it is no of way sum all. if min/max find while iterating
  like here we are at a index 0 (0 ........ n) and need to go to index n
  from 0 we have 2 decitions   - jump 1    - jump 2
  again from 1 or 2 we have to - jump 1    - jump 2
@@ -29,7 +30,7 @@ forming a decition tree
 '''
 '''
 or we can  say for n'th start number of was
-n = n-1 + n-2
+n = n-1 + n-2    thinking from the back
 which is actually fibonaschi 
 '''
 
@@ -55,3 +56,15 @@ class Solution:
         right = self.climbStairs(n-2)
         return left + right
 
+
+#tabulation with space observed
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        prev2 = 1
+        prev = 1
+        for i in range(2, n+1):
+            fibo = prev+prev2
+            prev2 = prev
+            prev = fibo
+        
+        return fibo
