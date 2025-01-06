@@ -40,3 +40,26 @@ Here
     - for cache array     O(n)
 '''
 # %%
+'''
+Now comes the tabulation
+tabulation means approaching the solution from base case and reach the desired point
+see the dp solution and try to build tabulation solution
+ - for an dp[n] fibo = fibo(n-1) + fibo(n-2)
+ - so we can say dp[n] = dp[i-1] + dp[i-2]
+ - the loop will start from 2 as the recurring relationship sstarts from 2
+'''
+
+dp = [0, 1]
+def fibo(n):
+    for i in range(2, n+1):
+        dp.append(dp[i-1] + dp[i-2])
+    
+    return dp[n]
+
+fibo(7)
+'''
+time complexity : O(n)
+space complexity: single O(n)
+ - as there is no use of recursion stack
+'''
+# %%
