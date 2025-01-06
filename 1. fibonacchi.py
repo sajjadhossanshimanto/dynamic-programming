@@ -63,3 +63,32 @@ space complexity: single O(n)
  - as there is no use of recursion stack
 '''
 # %%
+'''
+to optimise further we need some observations
+i    :  0  1  2  3  4  5  6  7
+fibo :  0  1  1  2  3  5  8  13
+
+i'th fibo only depends upon i-1 and i-2 // previous and prev2
+also there is a relation between prev and prev2
+after generating the ith fibo. the i becomes the prev
+so 
+'''
+
+def fibo(n):
+    if n<2: return n# for 0 and 1
+
+    prev2 = 0
+    prev = 1
+    for i in range(2, n+1):
+        f = prev+prev2
+        prev2 = prev
+        prev = f
+    
+    return f
+
+fibo(7)
+'''
+space complexity : O(1)
+time complexity : O(n)
+'''
+# %%
