@@ -18,7 +18,9 @@ class Solution:
             for cx, cy in [(x+1, y), (x, y+1)]:
                 if cx<0 or cy<0 or cx>=row or cy>=column: continue
 
-                heappush(q, (cost+grid[cx][cy], cx, cy))
+                if grid[cx][cy]!=-1: 
+                    heappush(q, (cost+grid[cx][cy], cx, cy))
+                grid[cx][cy] = -1
 '''
 - heap push and pop takes log(n) operation where n is the size of heap
 - and the looops runs in worse case m*n times
@@ -29,17 +31,7 @@ space complexity : O(mn)      for list
 
 m/n <= 200
 tc: 4000*log(4000) = 1,84,082 gets tl
-'''
-'''
-- heap push and pop takes log(n) operation where n is the size of heap
-- and the looops runs in worse case m*n times
-
-so at max there will be m*n push and pop with m*n iteration
-time complexity  : mn*log(mn)
-space complexity : O(mn)      for list
-
-m/n <= 200
-tc: 4000*log(4000) = 1,84,082 gets tl
+                    but 10^7 = 1 sec
 '''
 
 s = Solution()
