@@ -100,3 +100,29 @@ class Solution:
 s = Solution()
 s.minPathSum(grid = [[1,3,1],[1,5,1],[4,2,1]])
 # %%
+# dp solution
+
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        row, column = len(grid), len(grid[0])
+
+        dp = [[0]*(column) for _ in range(row)]
+
+        dp[0][0] = grid[0][0]
+        for i in range(row):
+            for j in range(column):
+                if i==0:
+                    if j!=0:
+                        # for the 1st row excluding the (0,0)
+                        dp[i][j] = grid[i][j]+dp[i][j-1]
+                elif j==0: 
+                    # for the 1st column of every row only one option
+                    dp[i][j] = grid[i][j]+dp[i-1][j]
+                else:
+                    dp[i][j] = min(grid[i][j] + dp[i-1][j], grid[i][j] + dp[i][j-1])
+
+        return dp[-1][-1]
+
+s = Solution()
+s.minPathSum(grid = [[1,3,1],[1,5,1],[4,2,1]])
+# %%
