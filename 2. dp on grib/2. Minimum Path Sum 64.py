@@ -55,7 +55,6 @@ class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
         row, column = len(grid), len(grid[0])
 
-        # def dfs(x=0, y=0, cost=grid[0][0]):
         @lru_cache(None)
         def dfs(x=0, y=0):
             if x==row-1 and y==column-1: 
@@ -63,6 +62,7 @@ class Solution:
             if x>=row or y>=column:
                 return inf
             
+            # upward flow - through returns
             right = grid[x][y] + dfs(x, y+1)
             down = grid[x][y] + dfs(x+1, y)
             return min(right, down)
@@ -71,3 +71,32 @@ class Solution:
 
 s = Solution()
 s.minPathSum(grid = [[1,3,1],[1,5,1],[4,2,1]])
+# %%
+
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        row, column = len(grid), len(grid[0])
+
+        # to impliment memoization need to cache cost of each pos
+        # whenever any other dfs occurs checks if current cost is begger
+        # if begger then do not continue 
+        min_cost = [inf]
+        def dfs(x=0, y=0, cost=0):
+            if x>=row or y>=column:
+                return
+            
+            cost+=grid[x][y]
+            if x==row-1 and y==column-1:
+                # down-ward flow
+                min_cost[0] = min(cost, min_cost[0])
+                return 
+            
+            dfs(x, y+1, cost)
+            dfs(x+1, y, cost)
+        
+        dfs()
+        return min_cost[0]
+
+s = Solution()
+s.minPathSum(grid = [[1,3,1],[1,5,1],[4,2,1]])
+# %%
