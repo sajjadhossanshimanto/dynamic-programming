@@ -121,8 +121,33 @@ class Solution:
                 else:
                     dp[i][j] = min(grid[i][j] + dp[i-1][j], grid[i][j] + dp[i][j-1])
 
-        return dp[-1][-1]
+        # return dp[-1][-1]
+        return dp
 
 s = Solution()
 s.minPathSum(grid = [[1,3,1],[1,5,1],[4,2,1]])
+# %%
+
+inf = float("inf")
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        row, column = len(grid), len(grid[0])
+
+        upper = [inf]*(column)
+        upper[0] = grid[0][0]
+
+        for i in range(row):
+            for j in range(column):
+                if i==0 and j==0: continue
+                if j==0:
+                    upper[j] = grid[i][j]+upper[j]
+                else:
+                    upper[j] = min(grid[i][j] + upper[j], grid[i][j] + upper[j-1])
+
+        return upper
+
+s = Solution()
+s.minPathSum(grid = [[1,3,1],[1,5,1],[4,2,1]])
+# %%
+s.minPathSum([[1,2],[1,1]])
 # %%
