@@ -103,3 +103,8 @@ s = Solution()
 s.cherryPickup(grid = [[3,1,1],[2,5,1],[1,5,5],[2,1,1]])
 
 # %%
+'''
+further obtimisation is also possible
+in 2D problem we obtimised to 1D
+here iin 3D, can be obtimised to 2D
+'''
