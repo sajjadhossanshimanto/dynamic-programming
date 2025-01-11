@@ -29,7 +29,7 @@ class Solution:
                     prev_row[y], # y-1 -> y-1+1
                     prev_row[y+2], # y+1 -> y+1+1
                 )
-            print(curr_row)
+            # print(curr_row)
             prev_row = curr_row
             curr_row = [inf]*(column+2)
             
