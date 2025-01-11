@@ -55,3 +55,65 @@ s.uniquePaths(m = 3, n = 7)
 # 3
 s.uniquePaths(m = 3, n = 2)
 # %%
+'''
+dp
+clearly it will be a 2D matrix dp
+- the base case is n,m cell returns 1
+- for writing the (0, 0) recurtion call 1st must finish its
+    adjecents (x+1, y) and (x, y+1)
+    then summation of them will be written in the current cell
+so that means we need to run loops from the buttom
+'''
+
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0]*n for _ in range(m)]
+        dp[m-1][n-1] = 1
+        for x in range(m-1, -1, -1):
+            for y in range(n-1, -1, -1):
+                if x==m-1 and y==n-1: continue
+
+                # dp[x][y] = dp[x+1][y] + dp[x][y+1] # need some boundery checking
+                if x+1>=m:
+                    dp[x][y] = dp[x][y+1]
+                elif y+1>=n:
+                    dp[x][y] = dp[x+1][y]
+                else:
+                    dp[x][y] = dp[x+1][y] + dp[x][y+1]
+        
+        return dp[0][0]
+
+# or
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0]*n for _ in range(m)]
+        dp[m-1][n-1] = 1
+        for x in range(m-1, -1, -1):
+            for y in range(n-1, -1, -1):
+                if x==m-1 and y==n-1: continue
+
+                right, down = 0, 0
+                if x+1<m: down = dp[x+1][y]
+                if y+1<n: right = dp[x][y+1]
+                dp[x][y] = down + right
+        
+        return dp[0][0]
+
+#or -> take a extra row & col with value 0
+
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0]*(n+1) for _ in range(m+1)]
+        dp[m-1][n-1] = 1
+        for x in range(m-1, -1, -1):
+            for y in range(n-1, -1, -1):
+                if x==m-1 and y==n-1: continue
+
+                dp[x][y] = dp[x+1][y] + dp[x][y+1]
+        
+        return dp[0][0]
+
+
+s = Solution()
+s.uniquePaths(m = 3, n = 7)
+# %%
