@@ -2,27 +2,36 @@
 
 #%%
 from typing import List, Optional
-from collections import deque
+from functools import lru_cache
+
 
 class Solution:
     def cherryPickup(self, grid: List[List[int]]) -> int:
         row, column = len(grid), len(grid[0])
-        # valid_source = deque([(0, 0), (row-1, column-1)])
-        dp = [[0]*column for _ in range(row)]
-        dp[0][0] = grid[0][0]
-        dp[0][-1] = grid[0][-1]
-        
-        for x in range(row):
-            for y in range(column):
-                if not dp[x][y]: continue
 
-                for cx, cy in [(x+1, y), (x+1, y-1), (x+1, y+1)]:
-                    if 0<=cx<row and 0<=cy<column:    
-                        dp[cx][cy] = max(
-                            dp[cx][cy],
-                            dp[x][y] + grid[cx][cy]
-                        )
-        return dp[-1]
+        # def dfs(x1, x2, y1, y2):# x1 and x2 are same simgle variable would be enough
+        @lru_cache(None)
+        def backtrack(x=0, y1=0, y2=column-1):
+            if y1<0 or y1>=column or y2<0 or y2>=column:
+                return 0
+            
+            # base case
+            if x==row-1:
+                if y1==y2: 
+                    return grid[x][y1]
+                return grid[x][y1] + grid[x][y2]
+            
+            max_value = 0
+            for cy1 in (y1+1, y1, y1-1):
+                for cy2 in (y2+1, y2, y2-1):
+                    max_value = max(max_value, backtrack(x+1, cy1, cy2))
+            
+            if y1==y2:    
+                return max_value+grid[x][y1]
+            else:
+                return max_value + grid[x][y1] + grid[x][y2]
+
+        return backtrack()
 
 s = Solution()
 # %%
