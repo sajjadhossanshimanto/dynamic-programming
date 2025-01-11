@@ -117,3 +117,28 @@ class Solution:
 s = Solution()
 s.uniquePaths(m = 3, n = 7)
 # %%
+'''
+row obtimisation
+for generating any perticular cell value we at max we need the next row and only the next value
+'''
+
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        down = [0]*(n+1)
+        curr = [0]*(n+1)
+
+        curr[n-1] = 1
+        for x in range(m-1, -1, -1):
+            for y in range(n-1, -1, -1):
+                if x==m-1 and y==n-1: continue
+
+                curr[y] = down[y] + curr[y+1]
+            
+            down = curr
+            curr = [0]*(n+1)
+            
+        return down
+
+
+s = Solution()
+s.uniquePaths(m = 3, n = 7)
