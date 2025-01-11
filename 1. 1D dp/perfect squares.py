@@ -67,3 +67,15 @@ class Solution:
         # hardest mathematically, but fortunately we don't have to include it
         else:
             return 4
+# %%
+# number theory caching tecnique
+f = [0] + [inf] * (10000)
+for i in count(1):
+    if i * i > 10000:
+        break
+    for j in range(i * i, 10000 + 1):
+        f[j] = min(f[j], f[j - i * i] + 1)
+        
+class Solution:
+    def numSquares(self, n: int) -> int:
+        return f[n]
