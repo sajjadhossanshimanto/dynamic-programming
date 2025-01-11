@@ -142,3 +142,22 @@ class Solution:
 
 s = Solution()
 s.uniquePaths(m = 3, n = 7)
+# %%
+# single row obtimisation
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        curr = [0]*(n+1)
+
+        curr[n-1] = 1
+        for x in range(m-1, -1, -1):
+            for y in range(n-1, -1, -1):
+                if x==m-1 and y==n-1: continue
+
+                curr[y] += curr[y+1]
+
+        return curr
+
+
+s = Solution()
+s.uniquePaths(m = 3, n = 7)
+# %%
