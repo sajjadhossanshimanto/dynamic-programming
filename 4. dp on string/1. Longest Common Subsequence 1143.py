@@ -114,3 +114,37 @@ class Solution:
 
 s = Solution()
 s.longestCommonSubsequence(text1 = "abcdefghij", text2 = "ecdgi" )
+# %%
+'''
+as there is i+1 and j+1, row obtimisation is possible
+'''
+
+
+class Solution:
+    # just takes 323ms
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        row, column = len(text1), len(text2)
+        bellow = [0]*(column+1)
+        curr_row = [0]*(column+1)
+        
+        for i in range(row-1, -1, -1):
+            for j in range(column-1, -1, -1):
+                if text1[i]==text2[j]:
+                    curr_row[j] = 1 + bellow[j+1]
+                else:
+                    curr_row[j] = max(bellow[j], curr_row[j+1])
+            bellow = curr_row
+            curr_row = [0]*(column+1)
+        
+        return bellow[0]
+
+s = Solution()
+s.longestCommonSubsequence(text1 = "abcdefghij", text2 = "ecdgi" )
+# %%
+# ans: 5
+# out: 6
+s.longestCommonSubsequence("abcba", "abcbcba")
+# %%
+'''
+further row obtimisation not possible as we need to maintain 2 values from the row bellow
+'''
