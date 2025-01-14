@@ -69,3 +69,26 @@ class Solution:
 #%%
 s = Solution()
 s.longestCommonSubstring(text1 = "abcjklp", text2 = "acjkp" )
+# %%
+from functools import lru_cache
+
+class Solution:
+    def longestCommonSubstring(self, text1: str, text2: str) -> int:
+        "tecnique: find max among all node values"
+
+        max_ln = [0]
+        @lru_cache(None)
+        def backtrack(i=0, j=0):
+            if i==len(text1) or j==len(text2): return 0
+
+            if text1[i]==text2[j]:
+                ans = 1+backtrack(i+1, j+1)
+                max_ln[0] = max(max_ln[0], ans)
+                return ans
+            
+            backtrack(i+1, j)
+            backtrack(i, j+1)
+            return 0
+    
+        backtrack()
+        return max_ln[0]
