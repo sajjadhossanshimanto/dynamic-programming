@@ -8,16 +8,17 @@ class Solution:
         bellow = [0]*(column+1)
         curr_row = [0]*(column+1)
         
-        for i in range(row-1, -1, -1):
-            for j in range(column-1, -1, -1):
+        for i in range(row):
+            for j in range(column):
                 if text1[i]==text2[j]:
-                    curr_row[j] = 1 + bellow[j+1]
+                    curr_row[j] = 1 + bellow[j-1]
                 else:
-                    curr_row[j] = max(bellow[j], curr_row[j+1])
+                    curr_row[j] = max(bellow[j], curr_row[j-1])
             bellow = curr_row
             curr_row = [0]*(column+1)
         
-        return bellow[0]
+        return bellow[-2]
+        return bellow
 
 s = Solution()
 s.longestPalindromeSubseq("bbbab")
