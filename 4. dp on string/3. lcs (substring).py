@@ -92,3 +92,24 @@ class Solution:
     
         backtrack()
         return max_ln[0]
+# %%
+class Solution:
+    def longestCommonSubstring(self, text1: str, text2: str) -> int:
+        row, column = len(text1), len(text2)
+        prev_row = [0]*(column+1)
+        curr_row = [0]*(column+1)
+
+        max_ln = 0
+        for i in range(row):
+            for j in range(column):
+                if text1[i]==text2[j]:
+                    curr_row[j] = 1 + prev_row[j-1]
+                    max_ln = max(max_ln, curr_row[j])
+            prev_row = curr_row
+            curr_row = [0]*(column+1)
+
+        return max_ln
+
+s = Solution()
+s.longestCommonSubstring(text1 = "abcjklp", text2 = "acjkp" )
+# %%
