@@ -31,6 +31,7 @@ s.longestCommonSubsequence(text1 = "abc", text2 = "def")
 # %%
 # memory limit exceeded
 # tle
+# ans: 6
 s.longestCommonSubsequence(text1 = "jgtargjctqvijshexyjcjcre", text2 = "pyzazexujqtsjebcnadahobwf")
 # %%
 from functools import lru_cache
@@ -56,7 +57,7 @@ class Solution:
 
         @lru_cache(None)
         def backtrack(i=0, j=0):
-            if i>=len(text1) or j>=len(text2): return 0
+            if i==len(text1) or j==len(text2): return 0
 
             if text1[i]==text2[j]:
                 return 1+backtrack(i+1, j+1)
@@ -66,6 +67,50 @@ class Solution:
         return backtrack()
 
 s = Solution()
-s.longestCommonSubsequence(text1 = "abcde", text2 = "ace" )
+# ans: 4
+s.longestCommonSubsequence(text1 = "abcdefghij", text2 = "ecdgi" )
 # s.longestCommonSubsequence(text1 = "abcde", text2 = "ace" )
 # %%
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        row, column = len(text1), len(text2)
+        dp = [[0]*(column+1) for _ in range(row+1)]
+        # 1. write base case
+        # its already written where the last column and row set to zero
+
+        # 2. iterate variables / run loops for inputs
+        for i in range(row):
+            for j in range(column):
+                # 3. 
+                if text1[i]==text2[j]:
+                    dp[i][j] = 1 + ...# 1 + rest. but the rest is now yet calculated
+                else:
+                    dp[i][j] = ...
+
+
+'''
+for this reason usually dp is always  oposit of recursion
+thats why 
+recursion [is called]-> top-down
+dp (tabulation) -> buttom up
+'''
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        row, column = len(text1), len(text2)
+        dp = [[0]*(column+1) for _ in range(row+1)]
+        # 1. write base case
+        # its already written where the last column and row set to zero
+
+        # 2. iterate variables / run loops for inputs
+        for i in range(row-1, -1, -1):
+            for j in range(column-1, -1, -1):
+                # 3. copy paste logics
+                if text1[i]==text2[j]:
+                    dp[i][j] = 1 + dp[i+1][j+1]
+                else:
+                    dp[i][j] = max(dp[i+1][j], dp[i][j+1])
+        
+        return dp[0][0]
+
+s = Solution()
+s.longestCommonSubsequence(text1 = "abcdefghij", text2 = "ecdgi" )
