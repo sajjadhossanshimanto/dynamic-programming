@@ -40,6 +40,11 @@ def longestCommonSubsequence(text1: str, text2: str) -> int:
 class Solution:
     def minInsertions(self, s: str) -> int:
         return len(s)-longestCommonSubsequence(s, s[::-1])
+'''
+                     - this porthion indicate the longest palindromic portion
+we well keep the longest palindromic portion intac and for the rest 
+we will just add in reverse manner 
+'''
 
 s = Solution()
 #%%
