@@ -68,3 +68,34 @@ s.numDistinct(s = "rabbbit", t = "rabbit")
 # %%
 s.numDistinct(s = "babgbag", t = "bag")
 # %%
+'''row obtimised solution '''
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        '''
+        ----->s
+        |
+        |
+        t
+        '''
+        bellow = [1]*(len(s)+1)
+        curr = [0]*(len(s)+1)
+        
+        for i in range(len(t)-1, -1, -1):
+            for j in range(len(s)-1, -1, -1):
+                # step 3 -> copy paste recurtion
+                l, r = 0, 0
+                # print(i, j)
+                if t[i]==s[j]:
+                    l = bellow[j+1]
+                r = curr[j+1]
+                
+                curr[j] = l+r
+            
+            bellow = curr
+            curr = [0]*(len(s)+1)
+            
+        return bellow
+
+s = Solution()
+s.numDistinct(s = "rabbbit", t = "rabbit")
+# %%
