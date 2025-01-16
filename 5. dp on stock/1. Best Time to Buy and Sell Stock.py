@@ -29,7 +29,23 @@ tc: n^2
 
 so we need to improve it. as it is bluthforce approach 
 to improve we are not appling some logic on it.
+
+logic:
+for maximum profit -> general sence says 
+buy at a lowest price point and sell with a higher price
 '''
+
+inf = float("inf")
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        min_value = prices[0]
+        max_profit = 0
+
+        for i in prices:
+            max_profit = max(max_profit, i-min_value)
+            min_value = min(min_value, i)
+        
+        return max_profit
 
 s = Solution()
 # 5
