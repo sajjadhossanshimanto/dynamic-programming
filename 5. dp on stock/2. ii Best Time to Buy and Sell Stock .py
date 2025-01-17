@@ -120,4 +120,32 @@ class Solution:
 
 s = Solution()
 s.maxProfit(prices = [7,1,5,3,6,4])
+# %%
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        '''
+        dp[start_index][bought] 
+        where bought has only 1 values indicationg yes or no
+        '''
+        dp = [[0]*(2) for _ in range(len(prices)+1)]
 
+        for start in range(len(prices)-1, -1, -1):
+            for bought in range(2):
+                if bought:
+                    # sell it here or not sell here
+                    dp[start][bought] = max(
+                        prices[start] + dp[start+1][0],# sold
+                        dp[start+1][bought]# not sold
+                    )
+                else:
+                    # buy here or not buy
+                    dp[start][bought] = max(
+                        -prices[start] + dp[start+1][1],
+                        dp[start+1][bought]
+                    )
+
+        return dp
+
+s = Solution()
+s.maxProfit(prices = [7,1,5,3,6,4])
+# %%
