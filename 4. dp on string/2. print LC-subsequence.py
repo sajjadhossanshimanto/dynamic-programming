@@ -19,7 +19,7 @@ class Solution:
         
         match = []
         i, j = 0, 0
-        while i!=row:
+        while i<row and j<column:
             if text1[i]==text2[j]:
                 match.append(text1[i])
                 i, j = i+1, j+1# go diagonal
@@ -38,4 +38,6 @@ s= Solution()
 s.longestCommonSubsequence(text1 = "abcde", text2 = "ace" )
 # %%
 s.longestCommonSubsequence("abcba", "abcbcba")
+# %%
+s.longestCommonSubsequence("horse", "ros")
 # %%
