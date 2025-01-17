@@ -18,23 +18,23 @@ class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         
         @lru_cache(None)
-        def recursion(start=0, bought=False, buy_index=None) -> int:
+        def recursion(start=0, buy_index=None) -> int:
             if start==len(prices):
                 return 0
             
-            if bought :
+            if buy_index!=None:
                 # sell it here or not sell here
                 return max(
                     0,
-                    recursion(start+1, False) + prices[start] - prices[buy_index],
-                    recursion(start+1, bought, buy_index)
+                    recursion(start+1, None) + prices[start] - prices[buy_index],
+                    recursion(start+1, buy_index)
                 )
             else:
                 # buy here or not buy
                 return max(
                     0,
-                    recursion(start+1, True, start),
-                    recursion(start+1, bought, buy_index)
+                    recursion(start+1, start),
+                    recursion(start+1, buy_index)
                 )
         
         return recursion()
