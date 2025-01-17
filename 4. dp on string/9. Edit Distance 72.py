@@ -43,16 +43,22 @@ class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
         cummon =  longestCommonSubsequence(word1, word2)
         # left part
-        left_rep = max(cummon[0][1] - cummon[0][0], 0)
-        left_remove = cummon[0][0] - left_rep
-        left_insert = cummon[0][1] - left_rep
-        left = left_rep+left_insert+left_remove
+        # if cummon[0][0]>cummon[0][1]:
+        #     '''
+        #     this signifies source word has more char than target word on the left side of their first match
+        #     so cummon part will be replaced + removal from source
+        #     removal count -> their diff
+        #     '''
+        #     left = cummon[0][0] - cummon[0][1]
+        #     left += cummon[0][0] - left
+        # else:
+        #     "insertion + replasement"
+        left = abs(cummon[0][0] - cummon[0][1])
+        left += max(cummon[0][0], cummon[0][1]) - left
 
         # right part
-        right_rep = max(cummon[-1][1] - cummon[-1][0], 0)
-        right_remove = cummon[-1][0] - right_rep
-        right_insert = cummon[-1][1] - right_rep
-        right = right_insert+right_remove+right_rep
+        right = abs(cummon[-1][0] - cummon[-1][1])
+        right += max(cummon[1][0], cummon[-1][1]) - right
 
         # middle
         # cummon[-1] - cummon[0] + 1
