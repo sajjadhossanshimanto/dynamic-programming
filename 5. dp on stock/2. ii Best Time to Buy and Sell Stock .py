@@ -149,3 +149,15 @@ class Solution:
 s = Solution()
 s.maxProfit(prices = [7,1,5,3,6,4])
 # %%
+# solution from leetcode 
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        left = 0
+        total = 0
+        for right in range(len(prices)):
+            if prices[right] < prices[left]:
+                left = right# ensuing left tobe the previous minimum value
+            else:
+                total += prices[right] - prices[left]
+                left = right
+        return total
