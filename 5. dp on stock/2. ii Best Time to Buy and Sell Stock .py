@@ -84,4 +84,40 @@ class Solution:
 
 s = Solution()
 s.maxProfit(prices = [7,1,5,3,6,4])
+'''
+3 * 10^4
+our current recurtion is 2D so TC: O(n^2)
+
+(3*10^4)^2 -> 9*10^8 -> 10^9 (almost)
+so n^2 will not fit here
+'''
+# %%
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        
+        @lru_cache(None)
+        def recursion(start=0, bought=False) -> int:
+            if start==len(prices):
+                return 0
+            
+            if bought:
+                # sell it here or not sell here
+                profit = max(
+                    prices[start] + recursion(start+1, False),# sold
+                    recursion(start+1, bought)# not sold
+                )
+            else:
+                # buy here or not buy
+                profit = max(
+                    -prices[start] + recursion(start+1, True),
+                    recursion(start+1, bought)
+                )
+
+            return profit
+
+        return recursion()
+
+s = Solution()
+s.maxProfit(prices = [7,1,5,3,6,4])
 
