@@ -50,3 +50,38 @@ s.maxProfit(prices = [1,2,3,4,5])
 # 0
 s.maxProfit([7,6,4,3,1])
 # %%
+from typing import List
+from functools import lru_cache
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        '''
+        [start_pos][buy_index]
+        buy index = -1 means NONE
+        '''
+        dp = [[0]*(len(prices)+1) for _ in range(len(prices)+1)]
+
+
+        for start in range(len(prices)-1, -1, -1):
+            for buy_index in range(len(prices)+1):
+        
+                if buy_index!=len(prices):
+                    dp[start][buy_index] = max(
+                        0,
+                        dp[start+1][-1] + prices[start] - prices[buy_index],
+                        dp[start+1][buy_index]
+                    )
+                else:
+                    # buy here or not buy
+                    dp[start][buy_index] =  max(
+                        0,
+                        dp[start+1][start],
+                        dp[start+1][buy_index]
+                    )
+            
+        return dp[0][0]
+
+s = Solution()
+s.maxProfit(prices = [7,1,5,3,6,4])
+
