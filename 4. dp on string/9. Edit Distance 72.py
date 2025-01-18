@@ -53,3 +53,39 @@ s.minDistance(word1 = "horse", word2 = "ros")
 # 5
 s.minDistance(word1 = "intention", word2 = "execution")
 # %%
+# dp solution
+
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        '''
+        as i represents word1 then x->word1
+        |----------> word2
+        |
+        |
+        word1
+        '''
+        row, column = len(word1), len(word2)
+        dp = [[0]*(column+1) for _ in range(row+1)]
+
+        # base caes
+        for i in range(len(dp)):
+            dp[i][-1] = len(word1) - i
+        
+        for j in range(len(dp[0])):
+            dp[-1][j] = len(word2) - j
+
+        for i in range(len(word1)-1, -1, -1):
+            for j in range(len(word2)-1, -1, -1):
+                if word1[i]==word2[j]:
+                    dp[i][j] = 0 + dp[i+1][j+1]
+                else:
+                    insert = 1 + dp[i][j+1]
+                    remove = 1 + dp[i+1][j]
+                    rep = 1 + dp[i+1][j+1]
+                    dp[i][j] = min(insert, remove, rep)
+        
+        return dp[0][0]
+
+s = Solution()
+s.minDistance(word1 = "horse", word2 = "ros")
+# %%
