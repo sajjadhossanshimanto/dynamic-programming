@@ -15,9 +15,12 @@ class Solution:
         def backtrack(i=0, j=0):
             if i==len(s) and j==len(p):
                 return True
-            
-            if i>=len(s) or j>=len(p):
-                return False
+            if i==len(s):
+                # edge case checking
+                for j in range(j, len(p)):
+                    if p[j]!="*": return False
+                return True
+            if j>=len(p): return False
             
             if p[j]=="?" or s[i]==p[j]:
                 return backtrack(i+1, j+1)
