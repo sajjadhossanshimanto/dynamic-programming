@@ -9,7 +9,7 @@ the 3rd option actually makes the question hard
 if we have a lcs -> ...r..s.. we need to count intermediate char
 as we can perform replace operation here
 
-
+hard one
 '''
 #%%
 from functools import lru_cache
