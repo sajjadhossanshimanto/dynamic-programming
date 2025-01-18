@@ -26,3 +26,24 @@ we may skip any down fall and wait for next bullrun to sell and maximise profit
 '''
 s.maxProfit([7,6,4,3,1])
 # %%
+from heapq import heappush, heappop
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        stack = []
+        ans = []
+        for i in prices:
+            profit = 0
+            while stack and stack[-1][0] <= i :
+                prev = stack.pop()
+                profit = max((i - prev[0]) + prev[1], profit)
+
+            heappush(ans, profit)
+            if len(ans)==3:
+                heappop(ans)
+            stack.append((i, profit))
+        
+        return ans
+
+s = Solution()
+# %%
