@@ -54,11 +54,9 @@ class Solution:
         # else:
         #     "insertion + replasement"
         left = abs(cummon[0][0] - cummon[0][1])
-        left += max(cummon[0][0], cummon[0][1]) - left
 
         # right part
         right = abs(cummon[-1][0] - cummon[-1][1])
-        right += max(cummon[1][0], cummon[-1][1]) - right
 
         # middle
         # cummon[-1] - cummon[0] + 1
@@ -72,7 +70,6 @@ class Solution:
         word1_extra = cummon[-1][0] - cummon[0][0] + 1 - len(cummon)
         
         # replacement                + insertion
-        # min(word1_extra, word2_extra) + abs(word1_extra-word2_extra)
         if word2_extra > word1_extra:
             '''
             word2 -> target word
@@ -90,9 +87,10 @@ class Solution:
             '''
             # replacement + removal
             middle = word2_extra + (word1_extra-word2_extra)
+        middle = min(word1_extra, word2_extra) + abs(word1_extra-word2_extra)
 
 
-        return middle
+        return left, middle, right
         # return longestCommonSubsequence(word1, word2)
         return left + middle + right
 
@@ -103,4 +101,13 @@ s.minDistance(word1 = "horse", word2 = "ros")
 # %%
 # 5
 s.minDistance(word1 = "intention", word2 = "execution")
+'''
+out: 7 = (3, 4, 0) but things are not like that
+ans: 5
+Explanation: 
+intention -> inention (remove 't')
+inention -> enention (replace 'i' with 'e')
+enention -> exention (replace 'n' with 'x')
+exention -> exection (replace 'n' with 'c')
+exection -> execution (insert 'u')'''
 # %%
