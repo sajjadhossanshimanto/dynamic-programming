@@ -1,5 +1,7 @@
 # https://leetcode.com/problems/wildcard-matching/description/
 #%%
+from functools import lru_cache
+
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
         '''
@@ -9,6 +11,7 @@ class Solution:
             ? -> any single char
         '''
 
+        @lru_cache(None)
         def backtrack(i=0, j=0):
             if i==len(s) and j==len(p):
                 return True
