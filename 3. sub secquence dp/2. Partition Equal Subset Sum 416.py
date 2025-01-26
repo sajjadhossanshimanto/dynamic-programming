@@ -7,6 +7,28 @@ solution from:
 '''
 #%%
 from typing import List
+from functools import lru_cache
+
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        half = sum(nums)/2
+        if half-int(half)>0: return False# if is_float
+
+        @lru_cache(0)
+        def dfs(start=0, left=int(half)):
+            if left==0: return True
+            if start>=len(nums): return False
+            if left<0: return False
+
+            # pick and non-pick
+            if dfs(start+1, left): return True
+            if dfs(start+1, left-nums[start]): return True
+
+            return False
+        
+        return dfs()
+
 
 
 class Solution:
