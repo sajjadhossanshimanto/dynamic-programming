@@ -61,8 +61,53 @@ class Solution:
 
 
 s = Solution()
+#%%
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        '''
+        2 paramiters are there start_index & left that can very
+        |---------> left
+        |
+        |
+        ↓
+        start index
+
+        - `starting index` vering from 0 to len(nums)
+        - `left` is vering from half to 0
+        - base case is where left=0
+        in dp we need to do oposit of original iteration
 
 
+        '''
+        half = sum(nums)/2
+        if half-int(half)>0: return False# if is_float
+
+        row, column = len(nums), int(half)
+        dp = [[0]*(column+1) for _ in range(row+1)]
+
+        # 1. base case
+        for i in dp:
+            i[0] = 1# left 0 is true
+
+        # 2. iteration
+        for start in range(len(nums)-1, -1, -1):
+            for left in range(1, int(half)+1):
+
+                # 3. coppy logic
+                for i in range(start, len(nums)):
+                    if nums[i]>left: continue
+
+                    dp[start][left] = dp[i+1][left-nums[i]]
+                    if dp[start][left]: break
+        '''
+        3 loops are there what's why getting time errors
+        '''
+
+        # start = 0, left=half
+        return dp[0][-1]
+
+s = Solution()
+#%%
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         half = sum(nums)/2
