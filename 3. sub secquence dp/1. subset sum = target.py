@@ -8,6 +8,24 @@ just have to print true or false
 # instade of usuing include non-include pattern
 # followiing the for-loop pattren for generation sub sequence from harshit vai
 
+#%% pick and not-pick
+def target_sum(l, target):
+    if target-int(target)>0: return False# if float
+    target = int(target)
+
+    def dfs(start=0, left = target):
+        if left==0: return True
+        if start==len(l): return False
+        if left<0: return False
+
+        if dfs(start+1, left): return True
+        if dfs(start+1, left-l[start]): return True
+
+        return False
+    
+    return dfs()
+
+print(target_sum([1, 2, 5, 2, 2], 10))
 #%%
 def target_sum(l, target):
     def subset_sum(index=0, left=target):
