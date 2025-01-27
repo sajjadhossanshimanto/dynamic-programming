@@ -9,10 +9,13 @@ just have to print true or false
 # followiing the for-loop pattren for generation sub sequence from harshit vai
 
 #%% pick and not-pick
+from functools import lru_cache
+
 def target_sum(l, target):
     if target-int(target)>0: return False# if float
     target = int(target)
 
+    @lru_cache(None)
     def dfs(start=0, left = target):
         if left==0: return True
         if start==len(l): return False
