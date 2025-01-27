@@ -109,6 +109,49 @@ class Solution:
 s = Solution()
 #%%
 class Solution:
+    # tc: 1687ms
+    def canPartition(self, nums: List[int]) -> bool:
+        '''
+        |---------> left
+        |
+        |
+        ↓
+        start index
+
+        - `starting index` vering from 0 to len(nums)
+        - `left` is vering from half to 0
+        '''
+        half = sum(nums)/2
+        if half-int(half)>0: return False# if is_float
+        half = int(half)
+        
+        row, column = len(nums), int(half)
+        dp = [[0]*(column+1) for _ in range(row+1)]
+        " extra column -> for base left=0 return true"
+        " extra row -> for base start=len(nums) return false"
+
+        # 1. base case
+        for i in dp:
+            i[0] = 1# left 0 is true
+        
+        # for j in range(len(dp[0])):
+        #     'if start==len(nums): return False'
+        #     dp[-1][j] = 0
+
+        for start in range(len(nums)-1, -1, -1):
+            for left in range(1, int(half)+1):
+                dp[start][left] = dp[start+1][left]
+                if left-nums[start]>=0:# so many places to make mistakes
+                    dp[start][left] = dp[start][left] or dp[start+1][left-nums[start]]
+                '''if dfs(start+1, left): return True
+                if dfs(start+1, left-nums[start]): return True'''
+
+        return bool(dp[0][half])
+        return dp
+
+s = Solution()
+#%%
+class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         half = sum(nums)/2
 
@@ -121,7 +164,7 @@ class Solution:
                 if i+j==half: return True
         return False
 
-s = Solution()
+# s = Solution()
 #%%
 # 1
 s.canPartition(
@@ -149,5 +192,10 @@ s.canPartition(
 # ans: True
 s.canPartition(
     [5,79,2,4,8,16,32,64,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]
+)
+# %%
+# false
+s.canPartition(
+    [100,4,6]
 )
 # %%
