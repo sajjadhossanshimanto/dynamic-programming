@@ -151,6 +151,39 @@ class Solution:
 
 s = Solution()
 #%%
+def target_sum(l, target):
+    if target-int(target)>0: return False# if float
+    target = int(target)
+
+    bellow = [False]*(target+1)
+    bellow[0] = True
+    curr = [True] + [False]*(target)
+
+
+    # 2. loops
+    for start in range(len(l)-1, -1, -1):
+        for left in range(1, target+1):
+            pick = bellow[left]
+
+            non_pick = False
+            if left-l[start]>=0:
+                non_pick = bellow[left-l[start]]
+            
+            curr[left] = pick or non_pick
+        bellow = curr
+        curr = [True] + [False]*(target)
+
+    return bellow[-1]
+
+class Solution:
+    # tc: 1126ms
+    def canPartition(self, nums: List[int]) -> bool:
+        half = sum(nums)/2
+
+        return target_sum(nums, half)
+
+s = Solution()
+#%%
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         half = sum(nums)/2
