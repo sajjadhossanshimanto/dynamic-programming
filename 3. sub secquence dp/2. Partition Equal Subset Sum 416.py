@@ -195,10 +195,10 @@ def target_sum(l, target):
 
     return bellow[-1]
 
-        for left in range(target, l[start]-1, -1):
 #%% observation 1 on single row obtimisation
 def target_sum(l, target):
-    # tc: 752 ms
+    # tc: 752 ms with observation 1 only
+    # tc: 675ms with both obsrvation
     if target-int(target)>0: return False# if float
     target = int(target)
 
@@ -214,6 +214,10 @@ def target_sum(l, target):
             non_pick = bellow[left-l[start]]
 
             bellow[left] = pick or non_pick
+            if bellow[-1]: return True
+            '''
+            observation 2: if by anyhow target is made to need to iterate any more
+            '''
 
     return bellow[-1]
 
