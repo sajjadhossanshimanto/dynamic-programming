@@ -152,6 +152,7 @@ class Solution:
 s = Solution()
 #%%
 def target_sum(l, target):
+    # tc: 1126ms
     if target-int(target)>0: return False# if float
     target = int(target)
 
@@ -174,9 +175,28 @@ def target_sum(l, target):
         curr = [True] + [False]*(target)
 
     return bellow[-1]
+#%% single row obtimisation
+def target_sum(l, target):
+    if target-int(target)>0: return False# if float
+    target = int(target)
 
+    bellow = [False]*(target+1)# this row represents when start==len(nums)
+    bellow[0] = True
+
+    for start in range(len(l)-1, -1, -1):
+        for left in range(target, 0, -1):# target -> 1
+            pick = bellow[left]
+
+            non_pick = False
+            if left-l[start]>=0:
+                non_pick = bellow[left-l[start]]
+            
+            bellow[left] = pick or non_pick
+
+    return bellow[-1]
+
+#%%
 class Solution:
-    # tc: 1126ms
     def canPartition(self, nums: List[int]) -> bool:
         half = sum(nums)/2
 

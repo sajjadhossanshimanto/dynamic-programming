@@ -72,8 +72,7 @@ def target_sum(l, target):
 print(target_sum([1, 2, 5, 2, 2], 10))
 print(target_sum([1, 2, 5, 2, 2], 15))
 print(target_sum([1, 2, 5, 100], 15))
-#%%
-from functools import lru_cache
+#%% double row space obtimisation
 
 def target_sum(l, target):
     if target-int(target)>0: return False# if float
@@ -94,12 +93,42 @@ def target_sum(l, target):
                 non_pick = bellow[left-l[start]]
             
             curr[left] = pick or non_pick
+
         bellow = curr
         curr = [True] + [False]*(target)
 
     return bellow[-1]
 
-#%%
+#%% single row space observation
+'''
+usually single row space observation only available 
+if and only if current value is not dependent upon any other then the just right or left cell
+
+key observation here:
+our current cell value is dependent upon random cell to the left but not from current row 
+only from the row bellow. so we may alter the iteration and go on from right to left
+as previous row is already there be generated before current row
+'''
+def target_sum(l, target):
+    if target-int(target)>0: return False# if float
+    target = int(target)
+
+    bellow = [False]*(target+1)# this row represents when start==len(nums)
+    bellow[0] = True
+
+    for start in range(len(l)-1, -1, -1):
+        for left in range(target, 0, -1):# target -> 1
+            pick = bellow[left]
+
+            non_pick = False
+            if left-l[start]>=0:
+                non_pick = bellow[left-l[start]]
+            
+            bellow[left] = pick or non_pick
+
+    return bellow[-1]
+
+#%% for loop based recursion
 def target_sum(l, target):
     def subset_sum(index=0, left=target):
         if left==0: return True
