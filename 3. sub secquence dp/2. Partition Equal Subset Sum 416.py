@@ -195,6 +195,28 @@ def target_sum(l, target):
 
     return bellow[-1]
 
+        for left in range(target, l[start]-1, -1):
+#%% observation 1 on single row obtimisation
+def target_sum(l, target):
+    # tc: 752 ms
+    if target-int(target)>0: return False# if float
+    target = int(target)
+
+    bellow = [False]*(target+1)# this row represents when start==len(nums)
+    bellow[0] = True
+
+    for start in range(len(l)-1, -1, -1):
+        '''
+        observation 1: skiping extra iteration
+        '''
+        for left in range(target, l[start]-1, -1):
+            pick = bellow[left]
+            non_pick = bellow[left-l[start]]
+
+            bellow[left] = pick or non_pick
+
+    return bellow[-1]
+
 #%%
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
