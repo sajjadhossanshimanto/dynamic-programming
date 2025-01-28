@@ -3,10 +3,10 @@
 from typing import List
 from functools import lru_cache
 
-# failed attemp 2
+
+# approach for non-negative numbers
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        if k==0: return 0
 
         # need tp cpunt how man times leaf is touched
         @lru_cache(None)
@@ -15,18 +15,14 @@ class Solution:
                 return 1
             if index==len(nums): return 0
 
+            not_pick = dfs(index+1, left)
             pick = 0
             if nums[index]<=left:
                 pick = dfs(index+1, left-nums[index])
             
-            return pick
+            return pick+not_pick
         
-        counter = 0
-        for i in range(len(nums)):
-            counter+=dfs(i, k)
-        
-        return counter
-        
+        return dfs()
 
 s = Solution()
 
@@ -38,5 +34,11 @@ s.subarraySum(nums = [1,1,1], k = 2)
 # 2
 s.subarraySum(nums = [1,2,3], k = 3)
 # %%
+# 1
+"surprisingly number can get negative which  is a problem"
 s.subarraySum([-1,-1,1], 0)
 # %%
+"another fault will occure with zero value"
+# 4 -> non coontigious => [0, 1], [0, 1], [0,0,1], [1]
+# but ours will get us ans: 1
+s.subarraySum([0,0,1], 1)
