@@ -123,6 +123,28 @@ class Solution:
         return bellow[amount]
 
 s = Solution()
+#%%
+# single row obtimise
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        # 1. create dp table
+        bellow = [0]*(amount+1)
+
+        # 2. base case
+        bellow[0] = 1
+
+        # 3. loops
+        for index in range(len(coins)-1, -1, -1):
+            for left in range(coins[index], amount+1):
+                # 4. copy logics
+                not_pick = bellow[left]
+                pick = bellow[left-coins[index]]
+
+                bellow[left] = pick + not_pick
+
+        return bellow[amount]
+
+s = Solution()
 # %%
 # 4 -> with replacement
 # 1 -> wiout replacement
