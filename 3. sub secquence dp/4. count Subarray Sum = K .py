@@ -5,6 +5,7 @@ from typing import List
 from functools import lru_cache
 
 
+#%%
 # approach for non-negative numbers
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
@@ -133,7 +134,7 @@ class Solution:
 
         # 2. loops
         for index in range(len(nums)-1, -1, -1):
-            for left in range(k+1):
+            for left in range(1, k+1):
                 not_pick = dp[index+1][left]
                 pick = 0
                 if nums[index]<=left:
@@ -143,6 +144,37 @@ class Solution:
                 
         return dp
         # return dp[0][k]
+
+s = Solution()
+# %%
+# row obtimised dp <- double row
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        '''
+        we observe,
+            dp[index+1][left] & dp[index+1][left-nums[index]]
+            - current cell value depends upon 2 values both of them are from `index+1` or bellow row
+        '''
+        bellow = [0]*(k+1)
+        curr = [0]*(k+1)
+
+        # 1. base case
+        bellow[0] = 1
+        curr[0] = 1
+
+        # 2. loops
+        for index in range(len(nums)-1, -1, -1):
+            for left in range(1, k+1):
+                not_pick = bellow[left]
+                pick = 0
+                if nums[index]<=left:
+                    pick = bellow[left-nums[index]]
+                curr[left] = pick + not_pick
+
+            bellow = curr
+            curr = [1] + [0]*(k)
+
+        return bellow[k]
 
 s = Solution()
 # %%
