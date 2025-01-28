@@ -107,3 +107,42 @@ recursion is not ideal choise
 
 let solve this for another day
 '''
+
+#%%
+# dp approach for non-negative numbers
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        '''
+        def dfs(index=0, left=k):
+            index -> can go at max len(num). len(nums) should be accessable
+            left -> 0-k. where k is accessable
+        |-------> left
+        |
+        |
+        ↓
+        index
+        '''
+        dp = [[0]*(k+1) for _ in range(len(nums)+1)]
+
+        # 1. base case
+        "if left==0: return 1"
+        for i in dp:
+            i[0] = 1
+            
+        "if index==len(nums): return 0"# already set to zero
+
+        # 2. loops
+        for index in range(len(nums)-1, -1, -1):
+            for left in range(k+1):
+                not_pick = dp[index+1][left]
+                pick = 0
+                if nums[index]<=left:
+                    pick = dp[index+1][left-nums[index]]
+                
+                dp[index][left] = pick + not_pick
+                
+        return dp
+        # return dp[0][k]
+
+s = Solution()
+# %%
