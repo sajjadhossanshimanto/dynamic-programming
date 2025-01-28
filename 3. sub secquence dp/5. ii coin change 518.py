@@ -65,10 +65,38 @@ class Solution:
                 pick = 0
                 if coins[index]<=left:
                     pick = dp[index][left-coins[index]]
-                
+
                 dp[index][left] = pick+not_pick
 
         return dp[0][amount]
+
+s = Solution()
+#%%
+# double row obtimise
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        # 1. create dp table
+        bellow = [0]*(amount+1)
+        curr = [0]*(amount+1)
+
+        # 2. base case
+        bellow[0]=1
+        curr[0]=1
+
+        # 3. loops
+        for index in range(len(coins)-1, -1, -1):
+            for left in range(1, amount+1):
+                # 4. copy logics
+                not_pick = bellow[left]
+                pick = 0
+                if coins[index]<=left:
+                    pick = curr[left-coins[index]]
+
+                curr[left] = pick+not_pick
+            bellow = curr
+            curr = [1] + [0]*(amount)
+
+        return bellow[amount]
 
 s = Solution()
 # %%
