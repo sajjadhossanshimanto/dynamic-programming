@@ -24,3 +24,20 @@ so we have seen max value may come from from items with least value. so there is
 so try out all ways choise the best ooption
 '''
 #%%
+# recursion: downflow only
+def solution(wt, value, bag_size):
+    max_val = [0]
+    def dfs(start=0, pre_sum_val=0, pre_sum_wt=0):
+        if pre_sum_wt>bag_size: return
+        if start==len(wt):
+            max_val[0] = max(max_val[0], pre_sum_val)
+            return
+        
+        dfs(start+1, pre_sum_val, pre_sum_wt)
+        dfs(start+1, pre_sum_val+value[start], pre_sum_wt+wt[start])
+    
+    dfs()
+    return max_val[0]
+
+print(solution([3, 2, 5], [30, 40, 60], 6))
+# %%
