@@ -181,15 +181,10 @@ s = Solution()
 # row obtimised dp <- single row
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        '''
-        we observe,
-            dp[index+1][left] & dp[index+1][left-nums[index]]
-            - current cell value depends upon 2 values both of them are from `index+1` or bellow row
-        '''
         bellow = [0]*(k+1)
 
         # 1. base case
-        bellow[0] = 1        
+        bellow[0] = 1
 
         # 2. loops
         for index in range(len(nums)-1, -1, -1):
@@ -198,6 +193,26 @@ class Solution:
                 pick = 0
                 if nums[index]<=left:
                     pick = bellow[left-nums[index]]
+                bellow[left] = pick + not_pick
+                # this pos -> represents value of the current pos
+        return bellow[k]
+
+s = Solution()
+# %%
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        bellow = [0]*(k+1)
+
+        # 1. base case
+        bellow[0] = 1
+
+        # 2. loops
+        for index in range(len(nums)-1, -1, -1):
+            for left in range(k, nums[index]-1, -1):# k -> 1 
+                not_pick = bellow[left]
+                pick = bellow[left-nums[index]]
+                "ensured in loop -> left will always greater or equal to nums[index]"
+                
                 bellow[left] = pick + not_pick
                 # this pos -> represents value of the current pos
         return bellow[k]
