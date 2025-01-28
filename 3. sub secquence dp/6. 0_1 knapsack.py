@@ -41,3 +41,21 @@ def solution(wt, value, bag_size):
 
 print(solution([3, 2, 5], [30, 40, 60], 6))
 # %%
+# recurtion: up and down stream
+def solution(wt, value, bag_size):
+
+    def dfs(start=0, pre_sum_wt=0):# return max value
+        if start==len(wt): return 0
+
+        not_pick = dfs(start+1, pre_sum_wt)
+        pick = 0
+        if pre_sum_wt+wt[start]<=bag_size:
+            pick = dfs(start+1, pre_sum_wt+wt[start])+value[start]
+
+        return max(pick, not_pick)
+
+    return dfs()
+
+print(solution([3, 2, 5], [30, 40, 60], 6))
+print(solution([3, 4, 5], [30, 40, 50], 8))
+# %%
