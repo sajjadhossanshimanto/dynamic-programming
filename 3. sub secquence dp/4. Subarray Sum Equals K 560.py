@@ -61,6 +61,7 @@ s = Solution()
 '''
 another way:
 we should not stop right after getting left=0 go deeper to the tree. 
+this will also works with negative
 '''
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
