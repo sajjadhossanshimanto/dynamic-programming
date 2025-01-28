@@ -99,3 +99,10 @@ s.subarraySum([-1,-1,1], 0)
 # but ours will get us ans: 1
 s.subarraySum([0,0,1], 1)
 # %%
+'''
+To count only `contiguous` subarrays 
+recursion is not ideal choise
+`prefix sum` is best aplicable here
+
+let solve this for another day
+'''
