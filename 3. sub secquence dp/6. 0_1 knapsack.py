@@ -88,6 +88,23 @@ def solution(wt, value, bag_size):
     # 5. return logic
     "ans -> def dfs(start=0, pre_sum_wt=0): -> default value which is given to the function"
     return dp[0][0]
+#%%
+# iteration -> obtimisation
+def solution(wt, value, bag_size):
+    dp = [[0]*(bag_size+1) for _ in range(len(wt)+1)]
+
+    for start in range(len(wt)-1, -1, -1):
+        for pre_sum_wt in range(bag_size-wt[start], -1, -1):
+            not_pick = dp[start+1][pre_sum_wt]            
+            pick = dp[start+1][pre_sum_wt+wt[start]] + value[start]
+            '''
+            pick = dp[start+1][pre_sum_wt+wt[start]] + value[start]
+            i need to make sure this     pre_sum_wt+wt[start]    this do not exists      bag_size
+            '''
+
+            dp[start][pre_sum_wt] = max(pick, not_pick)
+
+    return dp[0][0]
 
 # %%
 print(solution([3, 2, 5], [30, 40, 60], 6))
