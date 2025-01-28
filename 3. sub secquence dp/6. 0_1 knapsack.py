@@ -123,6 +123,21 @@ def solution(wt, value, bag_size):
 
     return bellow[0]
 
+#%%
+# single row optimisation
+def solution(wt, value, bag_size):
+    bellow = [0]*(bag_size+1)
+    curr = bellow.copy()
+
+    for start in range(len(wt)-1, -1, -1):
+        for pre_sum_wt in range(bag_size-wt[start]+1):
+            not_pick = bellow[pre_sum_wt]
+            pick = bellow[pre_sum_wt+wt[start]] + value[start]
+
+            bellow[pre_sum_wt] = max(pick, not_pick)
+
+    return bellow[0]
+
 # %%
 print(solution([3, 2, 5], [30, 40, 60], 6))
 print(solution([3, 4, 5], [30, 40, 50], 8))
