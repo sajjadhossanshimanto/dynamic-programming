@@ -59,3 +59,37 @@ def solution(wt, value, bag_size):
 print(solution([3, 2, 5], [30, 40, 60], 6))
 print(solution([3, 4, 5], [30, 40, 50], 8))
 # %%
+# dp
+def solution(wt, value, bag_size):
+    '''
+    def dfs(start=0, pre_sum_wt=0):
+        - `start` will go -> 0 - len(wt) # both end inclusive
+        - `pre_sum_wt` -> 0 - bag_size # both end inclusive
+        
+        values on dp arra are accessed like dp[start][pre_sum_wt]
+    '''
+    # 1. dp array
+    dp = [[0]*(bag_size+1) for _ in range(len(wt)+1)]
+
+    # 2. base case
+    "if start==len(wt): return 0"# already zero
+
+    # 3. loops
+    for start in range(len(wt)-1, -1, -1):
+        for pre_sum_wt in range(bag_size, -1, -1):
+            # 4. copy paste logic
+            not_pick = dp[start+1][pre_sum_wt]
+            pick = 0
+            if pre_sum_wt+wt[start]<=bag_size:
+                pick = dp[start+1][pre_sum_wt+wt[start]] + value[start]
+
+            dp[start][pre_sum_wt] = max(pick, not_pick)
+
+    # 5. return logic
+    "ans -> def dfs(start=0, pre_sum_wt=0): -> default value which is given to the function"
+    return dp[0][0]
+
+# %%
+print(solution([3, 2, 5], [30, 40, 60], 6))
+print(solution([3, 4, 5], [30, 40, 50], 8))
+# %%
