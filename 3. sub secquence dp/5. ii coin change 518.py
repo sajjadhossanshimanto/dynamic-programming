@@ -34,6 +34,43 @@ class Solution:
         return dfs()
 
 s = Solution()
+#%%
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        '''
+        def dfs(index=0, left=amount):
+            index -> can go at max len(coins). len(coins) should be accessable
+            left -> 0-amount. where amount is accessable
+        |-------> left
+        |
+        |
+        ↓
+        index
+        '''
+        # 1. create dp table
+        dp = [[0]*(amount+1) for _ in range(len(coins)+1)]
+
+        # 2. base case
+        "if left==0: return 1"
+        for i in dp:
+            i[0] = 1
+
+        "if index==len(coins): return 0"# already set to zero
+
+        # 3. loops
+        for index in range(len(coins)-1, -1, -1):
+            for left in range(1, amount+1):
+                # 4. copy logics
+                not_pick = dp[index+1][left]
+                pick = 0
+                if coins[index]<=left:
+                    pick = dp[index][left-coins[index]]
+                
+                dp[index][left] = pick+not_pick
+
+        return dp[0][amount]
+
+s = Solution()
 # %%
 # 4 -> with replacement
 # 1 -> wiout replacement
