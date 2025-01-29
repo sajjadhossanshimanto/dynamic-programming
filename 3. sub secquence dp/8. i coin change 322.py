@@ -19,19 +19,20 @@ class Solution:
 
         min_node = [inf]
         # node counting problem
-        def dfs(start=len(coins)-1, left=amount, node_count=0):
+        @lru_cache(None)
+        def dfs(start=0, left=amount, node_count=0):
             if left==0: 
                 min_node[0] = min(min_node[0], node_count)
                 return
-            if start==-1: return
+            if start==len(coins): return
             
-            dfs(start-1, left, node_count)# not pick 
+            dfs(start+1, left, node_count)# not pick 
             if left-coins[start]>=0:
                 "replacements are allowed"
                 dfs(start, left-coins[start], node_count+1)# pick
 
         dfs()
-        return min_node[0]
+        return -1 if min_node[0]==inf else min_node[0]
 
 s = Solution()
 # %%
@@ -56,3 +57,8 @@ s.coinChange(
     6249
 )
 # %%
+# memory limit exiced
+s.coinChange(
+    [3,7,405,436],
+    8839
+)
