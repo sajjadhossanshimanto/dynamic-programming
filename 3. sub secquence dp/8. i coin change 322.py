@@ -45,7 +45,7 @@ class Solution:
         # node counting problem
         @lru_cache(None)
         def dfs(start=0, left=amount):
-            if left==0: 
+            if left==0:
                 return 0
             if start==len(coins): return inf
             
@@ -59,6 +59,46 @@ class Solution:
             return min(pick, not_pick)
 
         ans = dfs()
+        return -1 if ans==inf else ans
+
+s = Solution()
+# %% dp
+inf = float("inf")
+class Solution:
+    # tc: 1116ms
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        coins.sort()
+        '''
+        def dfs(start=0, left=amount):
+            - dp[start][left]
+            - start  ->  will go `0 till len(coin)` [included]
+            - amount ->  will go `0 till amount` [included]
+        '''
+        # 1. dp table 
+        dp = [[0]*(amount+1) for _ in range(len(coins)+1)]
+
+        # 2. base case
+        "if left==0: return 0"
+        # already zros
+        "if start==len(coins): return inf"
+        for j in range(1, len(dp[0])):
+            # from 1 for left==0
+            dp[-1][j] = inf
+
+        # 3. loops
+        for start in range(len(coins)-1, -1, -1):
+            for left in range(amount+1):
+                # 4. copy paste logics
+                not_pick = dp[start+1][left]
+                pick = inf
+                if left-coins[start]>=0:
+                    pick = 1 + dp[start][left-coins[start]]
+                
+                dp[start][left] = min(pick, not_pick)
+
+        # 5. ans dp
+        ans = dp[0][amount]
+        # return ans
         return -1 if ans==inf else ans
 
 s = Solution()
@@ -85,6 +125,7 @@ s.coinChange(
 )
 # %%
 # memory limit exiced
+# 25
 s.coinChange(
     [3,7,405,436],
     8839
