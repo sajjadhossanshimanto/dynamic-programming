@@ -15,15 +15,17 @@ from functools import lru_cache
 inf = float("inf")
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
+        coins.sort()
+
         min_node = [inf]
         # node counting problem
-        def dfs(start=0, left=amount, node_count=0):
+        def dfs(start=len(coins)-1, left=amount, node_count=0):
             if left==0: 
                 min_node[0] = min(min_node[0], node_count)
                 return
-            if start==len(coins): return
+            if start==-1: return
             
-            dfs(start+1, left, node_count+1)# not pick 
+            dfs(start-1, left, node_count)# not pick 
             if left-coins[start]>=0:
                 "replacements are allowed"
                 dfs(start, left-coins[start], node_count+1)# pick
