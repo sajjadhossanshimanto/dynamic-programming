@@ -207,3 +207,30 @@ s.coinChange(
 )
 # or maximum recurtion dept will excid as recurtion dept is 3000
 # %%
+'''
+once we have understood this is a decition tree
+we can apply any tree logic 
+it is not mendatory that we have to have use dfs
+like here we have used bfs -> 
+dfs is more suitable here because. we need to count the nodes of sortest path that reaches the leaft from root
+'''
+class Solution:
+    # tc: 316
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        queue = deque([(amount, 0)])
+        visited_nodes = set([amount])
+
+        if not coins: return -1
+        if amount == 0: return 0
+
+        while queue:
+            cur_amount, coins_used = queue.popleft()
+
+            for c in coins:
+                next_amount = cur_amount - c
+                if next_amount == 0:
+                    return coins_used + 1
+                elif next_amount > 0 and next_amount not in visited_nodes:
+                    queue.append((next_amount, coins_used + 1))
+                    visited_nodes.add(next_amount)
+        return -1
