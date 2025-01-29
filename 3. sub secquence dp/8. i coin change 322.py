@@ -106,7 +106,7 @@ s = Solution()
 # dp: row obtimisation
 inf = float("inf")
 class Solution:
-    # tc: 1116ms
+    # tc: 992 ms
     def coinChange(self, coins: List[int], amount: int) -> int:
         # coins.sort()
 
@@ -128,6 +128,29 @@ class Solution:
             curr = [0]*(amount+1)
 
         # 5. ans dp
+        ans = bellow[amount]
+        # return ans
+        return -1 if ans==inf else ans
+
+s = Solution()
+#%%
+# dp: single row obtimisation
+inf = float("inf")
+class Solution:
+    # tc: 924 ms
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        bellow = [inf]*(amount+1)
+        bellow[0] = 0
+
+        for start in range(len(coins)-1, -1, -1):
+            for left in range(amount+1):
+                not_pick = bellow[left]
+                pick = inf
+                if left-coins[start]>=0:
+                    pick = 1 + bellow[left-coins[start]]
+                
+                bellow[left] = min(pick, not_pick)
+
         ans = bellow[amount]
         # return ans
         return -1 if ans==inf else ans
