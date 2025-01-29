@@ -157,6 +157,27 @@ class Solution:
 
 s = Solution()
 #%%
+#iteration improvement
+inf = float("inf")
+class Solution:
+    # tc: 739 ms
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        bellow = [inf]*(amount+1)
+        bellow[0] = 0
+
+        for start in range(len(coins)-1, -1, -1):
+            for left in range(coins[start], amount+1):
+                not_pick = bellow[left]
+                pick = 1 + bellow[left-coins[start]]
+                
+                bellow[left] = min(pick, not_pick)
+
+        ans = bellow[amount]
+        # return ans
+        return -1 if ans==inf else ans
+
+s = Solution()
+#%%
 # 3
 s.coinChange(
     coins = [1,2,5], amount = 11
