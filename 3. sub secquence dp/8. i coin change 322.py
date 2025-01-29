@@ -1,4 +1,6 @@
 '''
+this question is titled as "minimum coins" in the lecture series
+
 https://leetcode.com/problems/coin-change/description/
 
 solved from neetcode. good to see but not recomanded
