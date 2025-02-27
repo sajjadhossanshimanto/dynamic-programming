@@ -121,7 +121,8 @@ class Solution:
 
         for start in range(n-1, -1, -1):
             for brought in range(2):
-                for cap in range(2+1):# during implementation i've noticed for cap we need cap-1. so the loop should run increasing oder
+                for cap in range(1, 2+1):# during implementation i've noticed for cap we need cap-1. so the loop should run increasing oder
+                    # NOTE: we can't start from cap 0. for any cap=0 return would be 0 that is the base case
                     if brought:
                         # we have 2 choices either to sell or not
                         dp[start][brought][cap] = max(
@@ -136,6 +137,8 @@ class Solution:
                         )
 
         return dp[0][0][2]
-
+'''
+ac beats 20%. 1228 ms.
+'''
 s = Solution()
-# %%
+# %% 
