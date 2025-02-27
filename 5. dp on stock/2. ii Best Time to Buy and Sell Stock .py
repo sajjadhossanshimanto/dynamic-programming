@@ -1,5 +1,8 @@
 '''
 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
+- n is 3*10^4
+first thing to understand is n^2 is ok.
+
 
 can perform multiple buy and sell but
 can't buy again berfor sell. so we have to buy sell then buy sell
@@ -8,12 +11,24 @@ can't buy again berfor sell. so we have to buy sell then buy sell
 2. we `try all ways`. and 
 3. `find the best way`
 whenever we say try all ways -> we mean `recurtion`
+there are 2 choises:
+    1. buy or hold   -> if already bought
+    2. sell or hold  -> if not bought
 '''
 #%%
 from typing import List
 from functools import lru_cache
 
+'''
+for n = 3*10^4
 
+for each day we have 2 choises
+so for n days we have 2^n ways -> would gets tle
+
+with memoization it is n^2 -> 9*10^8 -> 10^9 (almost)
+is ok to pass. but gets memory error. may be because of the recursion stack
+
+'''
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         
@@ -89,7 +104,11 @@ s.maxProfit(prices = [7,1,5,3,6,4])
 our current recurtion is 2D so TC: O(n^2)
 
 (3*10^4)^2 -> 9*10^8 -> 10^9 (almost)
-so n^2 will not fit here
+# so n^2 will not fit here.
+would fit tightlly.
+
+it may seems like N^2 but it is not. we have few choises for buy_index. so the number of column is fixed
+so it is not n^2. it is n*2
 '''
 # %%
 
