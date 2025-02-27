@@ -75,3 +75,7 @@ class Solution:
 
 s = Solution()
 # %%
+'''
+10^5 clearly indicates we need to do it in O(n) or O(logn) time complexity
+
+'''
