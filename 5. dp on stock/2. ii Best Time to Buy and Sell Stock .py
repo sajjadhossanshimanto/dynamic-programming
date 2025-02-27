@@ -167,7 +167,40 @@ class Solution:
 
 s = Solution()
 s.maxProfit(prices = [7,1,5,3,6,4])
-# %%
+#%%
+# we can space obtaimize it to single row as well
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        '''
+        for generating : dp[start_index][bought] we are only depending upon the next row
+        so we can use only 1 row
+        '''
+        current = [0]*2
+        bellow = [0]*2
+
+        for start in range(len(prices)-1, -1, -1):
+            for bought in range(2):
+                if bought:
+                    # sell it here or not sell here
+                    current[bought] = max(
+                        prices[start] + bellow[0],# sold
+                        bellow[bought]# not sold
+                    )
+                else:
+                    # buy here or not buy
+                    current[bought] = max(
+                        -prices[start] + bellow[1],
+                        bellow[bought]
+                    )
+            
+            bellow = current[:]
+            # reset current if needed
+
+        return bellow
+
+s = Solution()
+s.maxProfit(prices = [7,1,5,3,6,4])# 7
+# %% recurtion is like blind testing. bellow is the stategic approach spacific for this problem
 '''
 
 stock prices are best represented when we draw graps
