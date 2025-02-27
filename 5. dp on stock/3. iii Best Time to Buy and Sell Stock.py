@@ -173,4 +173,37 @@ class Solution:
 ac beats 27% time: 574ms
 '''
 s = Solution()
+# %% single row obtimisation
+
+class Solution:
+    def maxProfit(self, prices) -> int:
+        n = len(prices)
+        current = [[0]*3 for _ in range(2)]
+
+        for start in range(n-1, -1, -1):
+            for brought in range(2):
+                for cap in range(1, 2+1):# during implementation i've noticed for cap we need cap-1. so the loop should run increasing oder
+                    # NOTE: we can't start from cap 0. for any cap=0 return would be 0 that is the base case
+                    if brought:
+                        # we have 2 choices either to sell or not
+                        current[brought][cap] = max(
+                            prices[start] + current[0][cap-1],
+                            current[1][cap]# hold
+                        )
+                    else:
+                        # we have 2 choices either to buy or not
+                        current[brought][cap] = max(
+                            -prices[start] + current[1][cap],
+                            current[0][cap]# hold
+                        )
+            # bellow = current
+            # reset current here. but not needed for now
+
+        return current[0][2]
+
+'''
+ac beats 27% time: 591ms     -> quite the same as double row implimentation
+'''
+s = Solution()
+s.maxProfit([3,3,5,0,0,3,1,4])
 # %%
