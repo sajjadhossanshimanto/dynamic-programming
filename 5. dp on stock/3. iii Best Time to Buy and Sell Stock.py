@@ -4,6 +4,8 @@ https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
 n=10^5
 so we have to do it in O(n) or O(nlogn) time
 
+- AT most 2 transactions are allowed.
+
 but be afread overthinking that you need to implement #D dp
 3D dp doesn't mendatorily mean O(n^3). 
 '''
