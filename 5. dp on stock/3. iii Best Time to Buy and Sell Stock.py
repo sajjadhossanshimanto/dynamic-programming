@@ -141,6 +141,9 @@ class Solution:
         return dp[0][0][2]
 '''
 ac beats 20%. 1228 ms.
+seeing the dp solution it is clear that it is not actually O(n^3)
+the inner 2 loops runs in constant time 2*3
+so overall time complexity -> O(6n)
 '''
 s = Solution()
 # %% double row obtimisation
